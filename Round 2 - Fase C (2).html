@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Round 3 "The Mystery of the Missing Island"</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        island: {
+                            900: '#0b1329',
+                            800: '#111d38',
+                            700: '#1c2d52',
+                            gold: '#d97706',
+                            emerald: '#059669',
+                            teal: '#0d9488'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        cinzel: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0b1329;
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(circle at 50% 0%, rgba(20, 184, 166, 0.15) 0%, transparent 75%);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .cinzel-heading {
+            font-family: 'Cinzel', serif;
+        }
+
+        .glass-panel {
+            background: rgba(17, 29, 56, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .grid-bg {
+            background-size: 20px 20px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        /* Light mode / White background overrides */
+        body.light-theme {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            background-image: radial-gradient(circle at 50% 0%, rgba(13, 148, 136, 0.08) 0%, transparent 75%) !important;
+        }
+
+        body.light-theme header {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        body.light-theme .glass-panel {
+            background: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01) !important;
+            color: #0f172a !important;
+        }
+
+        body.light-theme .text-slate-100,
+        body.light-theme .text-slate-200,
+        body.light-theme .text-slate-300 {
+            color: #1e293b !important;
+        }
+
+        body.light-theme .text-slate-400 {
+            color: #64748b !important;
+        }
+
+        body.light-theme .bg-slate-900,
+        body.light-theme .bg-slate-950,
+        body.light-theme .bg-slate-900\/90,
+        body.light-theme .bg-slate-900\/80,
+        body.light-theme .bg-slate-900\/60 {
+            background-color: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        body.light-theme .grid-bg {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px) !important;
+        }
+
+        /* Print & PDF Export Styling */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            header, nav, #actionHeaderButtons, .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .glass-panel {
+                background: white !important;
+                border: 1px solid #94a3b8 !important;
+                box-shadow: none !important;
+                color: black !important;
+            }
+            .text-slate-100, .text-slate-200, .text-slate-300, .text-amber-200, .text-amber-300, .text-amber-400, .text-amber-600 {
+                color: #0f172a !important;
+            }
+            .text-slate-400, .text-slate-500 {
+                color: #475569 !important;
+            }
+            .bg-slate-900, .bg-slate-950, .bg-slate-800 {
+                background: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-teal-500 selection:text-white">
+
+    <header class="border-b border-slate-800 bg-island-900/90 backdrop-blur sticky top-0 z-40 px-4 lg:px-8 py-4 transition-colors">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3 text-center md:text-left">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 to-emerald-500 flex items-center justify-center text-slate-950 font-bold text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-shapes"></i>
+                </div>
+                <div>
+                    <!-- Prominent Header Title -->
+                    <h1 class="cinzel-heading text-2xl md:text-3xl lg:text-4xl font-black tracking-wide text-amber-500 dark:text-amber-400">
+                        Round 3 "The Mystery of the Missing Island"
+                    </h1>
+                    <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center md:justify-start gap-1.5 font-medium mt-0.5">
+                        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Shapes & Geometry Expedition
+                    </p>
+                </div>
+            </div>
+
+            <!-- Header Quick Controls -->
+            <div id="actionHeaderButtons" class="flex items-center gap-2 flex-wrap justify-end">
+                <!-- White / Dark Theme Toggle Button -->
+                <button onclick="toggleWhiteBackground()" id="themeBtn" class="px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 transition flex items-center gap-2" title="Switch White / Dark Background">
+                    <i class="fa-solid fa-sun text-amber-500" id="themeIcon"></i>
+                    <span id="themeLabel" class="hidden sm:inline">White BG Mode</span>
+                </button>
+
+                <!-- Adventure Music Toggle Button -->
+                <button onclick="toggleAdventureMusic()" id="musicBtn" class="px-3 py-2 text-xs font-semibold rounded-xl bg-teal-500/10 hover:bg-teal-500/20 text-teal-600 dark:text-teal-400 border border-teal-500/30 transition flex items-center gap-2" title="Play / Pause Adventure Background Music">
+                    <i class="fa-solid fa-music" id="musicIcon"></i>
+                    <span id="musicLabel" class="hidden sm:inline">Play Adventure Music</span>
+                </button>
+
+                <!-- Download PDF / Printable Worksheet Button -->
+                <button onclick="showWorksheetView()" class="px-3 py-2 text-xs font-semibold rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-700 dark:text-amber-300 border border-amber-500/30 transition flex items-center gap-2" title="Print or Download PDF Questions">
+                    <i class="fa-solid fa-file-pdf text-amber-600 dark:text-amber-400"></i>
+                    <span>Download PDF / Worksheet</span>
+                </button>
+
+                <!-- Sound Effects Toggle Button -->
+                <button onclick="toggleAudio()" id="soundBtn" class="p-2.5 rounded-xl bg-slate-200 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 transition" title="Sound Effects SFX">
+                    <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 lg:p-8 flex flex-col justify-start">
+
+        <!-- Navigation Bar: Interactive Quest vs Printable PDF Worksheet -->
+        <div class="flex items-center justify-between gap-4 mb-6 no-print">
+            <div class="flex items-center gap-2 bg-slate-200 dark:bg-slate-900 p-1.5 rounded-xl border border-slate-300 dark:border-slate-800">
+                <button onclick="switchView('quest')" id="tabQuestBtn" class="px-4 py-2 rounded-lg font-bold text-xs transition flex items-center gap-2 bg-amber-500 text-slate-950 shadow">
+                    <i class="fa-solid fa-compass"></i> Interactive Quest View
+                </button>
+                <button onclick="switchView('worksheet')" id="tabWorksheetBtn" class="px-4 py-2 rounded-lg font-bold text-xs transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-file-lines"></i> Printable Worksheet / PDF Questions
+                </button>
+            </div>
+
+            <!-- Stopwatch with On/Off Control Button -->
+            <div class="hidden sm:flex items-center gap-2 text-xs font-mono font-bold text-teal-600 dark:text-teal-400 bg-teal-500/10 px-3.5 py-2 rounded-xl border border-teal-500/20 shadow-sm">
+                <i class="fa-solid fa-stopwatch text-teal-500 text-sm"></i>
+                <span>Stopwatch: <span id="navTimer">00:00</span></span>
+                <button onclick="toggleStopwatch()" id="btnStopwatchToggle" class="ml-1 px-2 py-0.5 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-700 dark:text-teal-300 transition flex items-center gap-1 font-sans text-[11px]" title="Start / Pause Stopwatch">
+                    <i class="fa-solid fa-pause text-[10px]" id="stopwatchIcon"></i>
+                    <span id="stopwatchLabel">Pause</span>
+                </button>
+            </div>
+        </div>
+
+        <section id="screenQuest" class="space-y-6 no-print">
+            <!-- Progress Tracker Bar -->
+            <div class="glass-panel p-4 rounded-2xl">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-3">
+                    <div class="flex items-center gap-3">
+                        <span id="chapterBadge" class="bg-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-extrabold px-3 py-1 rounded-lg border border-amber-500/40 uppercase">QUEST 1 OF 6</span>
+                        <h3 id="questTitle" class="cinzel-heading text-lg md:text-xl font-bold text-amber-600 dark:text-amber-200">The Sun Temple Angle</h3>
+                    </div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                        <span>Progress:</span>
+                        <span id="progressPercent" class="font-bold text-emerald-600 dark:text-emerald-400">16%</span>
+                    </div>
+                </div>
+                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-900 rounded-full overflow-hidden border border-slate-300 dark:border-slate-800">
+                    <div id="progressBar" class="h-full bg-gradient-to-r from-teal-500 via-emerald-400 to-amber-400 w-1/6 transition-all duration-500"></div>
+                </div>
+            </div>
+
+            <!-- Question and Diagram Workspace -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Question Column (7 Cols) -->
+                <div class="lg:col-span-7 glass-panel p-6 rounded-2xl space-y-5">
+                    <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900/90 border-l-4 border-amber-500 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed flex items-start gap-3">
+                        <i class="fa-solid fa-scroll text-amber-500 text-lg mt-0.5"></i>
+                        <div>
+                            <span class="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider block mb-1">Expedition Story Log:</span>
+                            <p id="storyText">Inside the ancient Sun Temple, a triangle symbol is carved onto a stone pillar...</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase text-teal-600 dark:text-teal-400 tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-brain"></i> Geometry & Shapes Challenge
+                            </span>
+                            <span id="questionTopic" class="text-xs bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md border border-slate-300 dark:border-slate-700 font-semibold">Triangle Angles</span>
+                        </div>
+
+                        <h3 id="questionText" class="text-base md:text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                            Question text appears here...
+                        </h3>
+
+                        <!-- Hint Box Section -->
+                        <div class="flex items-center justify-between pt-1">
+                            <button onclick="toggleHint()" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1.5 transition bg-amber-500/10 px-3 py-1.5 rounded-lg border border-amber-500/20">
+                                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                                <span>Question Hint</span>
+                            </button>
+                        </div>
+
+                        <div id="hintBox" class="hidden p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 text-xs leading-relaxed">
+                            <i class="fa-solid fa-info-circle mr-1"></i>
+                            <span id="hintText">Hint contents...</span>
+                        </div>
+                    </div>
+
+                    <!-- Multiple Choice Answer Options Container -->
+                    <div id="answersContainer" class="space-y-3 pt-2">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                    <!-- Action Controls -->
+                    <div class="pt-2 flex items-center gap-3">
+                        <button onclick="submitAnswer()" id="btnSubmit" class="flex-1 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>SUBMIT ANSWER</span>
+                        </button>
+                        <button onclick="nextQuestionDirect()" class="px-4 py-3.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl border border-slate-300 dark:border-slate-700 transition text-xs flex items-center gap-2" title="Skip to next question">
+                            <span>Next Question</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SVG Visual Canvas Column (5 Cols) -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="glass-panel p-4 rounded-2xl flex flex-col items-center">
+                        <div class="w-full flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase text-amber-600 dark:text-amber-400 tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-draw-polygon"></i> Interactive Shape Canvas
+                            </span>
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400">SVG Graphics Render</span>
+                        </div>
+
+                        <div id="visualizerBox" class="w-full aspect-square bg-slate-950 rounded-xl border border-slate-800 relative flex items-center justify-center overflow-hidden grid-bg">
+                            <svg id="geoSvg" class="w-full h-full" viewBox="0 0 400 400">
+                                <!-- Dynamic Graphic Elements -->
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screenWorksheet" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 glass-panel p-4 rounded-2xl no-print">
+                <div class="flex items-center gap-3">
+                    <span class="p-2.5 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 text-xl"><i class="fa-solid fa-file-lines"></i></span>
+                    <div>
+                        <h3 class="font-bold text-slate-900 dark:text-slate-100 text-sm md:text-base">Question Sheet & Printable PDF View</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Full clean worksheet overview ready for direct printing or PDF export.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleTeacherKey()" id="btnTeacherKey" class="px-3 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-amber-300 font-bold text-xs rounded-xl border border-slate-300 dark:border-slate-700 transition flex items-center gap-2">
+                        <i class="fa-solid fa-key"></i> Teacher Answer Key
+                    </button>
+                    <button onclick="window.print()" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow transition flex items-center gap-2">
+                        <i class="fa-solid fa-print"></i> Download / Print PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- PDF Print Title Header -->
+            <div class="text-center py-4 border-b border-slate-300 dark:border-slate-800 hidden print:block">
+                <h1 class="text-2xl font-bold font-serif">Round 3 "The Mystery of the Missing Island"</h1>
+                <p class="text-xs text-slate-600 mt-1">Shapes & Mathematics Challenge Worksheet</p>
+            </div>
+
+            <!-- Printable Worksheet Questions Container -->
+            <div id="worksheetQuestionsList" class="space-y-6">
+                <!-- Dynamically populated via renderWorksheetQuestions() -->
+            </div>
+        </section>
+
+        <section id="screenVictory" class="hidden max-w-3xl mx-auto w-full glass-panel p-8 md:p-12 rounded-3xl text-center space-y-6 my-auto relative no-print">
+            <div class="inline-flex p-4 bg-amber-500/20 text-amber-500 dark:text-amber-300 rounded-full border border-amber-500/40 text-4xl mb-2 animate-bounce">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+
+            <div>
+                <h2 class="cinzel-heading text-3xl md:text-4xl font-black text-amber-600 dark:text-amber-300 tracking-wide">CONGRATULATIONS! QUEST COMPLETED!</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-sm mt-2">All geometry and shape challenges for Round 3 "The Mystery of the Missing Island" have been solved.</p>
+            </div>
+
+            <div class="bg-slate-100 dark:bg-slate-900/80 p-4 rounded-xl border border-slate-300 dark:border-slate-800 max-w-xs mx-auto">
+                <span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">Total Time Elapsed (Stopwatch)</span>
+                <span id="resTimeLeft" class="text-2xl font-black text-teal-600 dark:text-teal-400">00:00</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <button onclick="showWorksheetView()" class="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Print / Download PDF Worksheet</span>
+                </button>
+                <button onclick="restartExpedition()" class="px-6 py-3.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold rounded-xl border border-slate-300 dark:border-slate-700 transition flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Restart Quest</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 no-print">
+        <div class="glass-panel max-w-md w-full p-6 rounded-2xl space-y-4 shadow-2xl text-center">
+            <div id="feedbackIcon" class="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 id="feedbackTitle" class="cinzel-heading text-xl font-bold text-slate-900 dark:text-slate-100">Correct Answer!</h3>
+            <p id="feedbackText" class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-100 dark:bg-slate-900/80 p-3 rounded-xl border border-slate-300 dark:border-slate-800 text-left">
+                Mathematical step-by-step explanation.
+            </p>
+            <button onclick="closeFeedback()" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl transition text-sm">
+                Continue to Next Question <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Game State Core
+        let gameState = {
+            secondsElapsed: 0,
+            timerInterval: null,
+            isStopwatchRunning: true,
+            currentQuestionIndex: 0,
+            audioEnabled: true,
+            adventureMusicActive: false,
+            musicInterval: null,
+            selectedOption: null,
+            showTeacherKey: false,
+            isWhiteBg: false
+        };
+
+        // Questions Bank - Slightly Easier Shapes & Geometry (No grade labels, no answer spoilers in SVG)
+        const questions = [
+            {
+                chapter: "QUEST 1 OF 6",
+                title: "The Sun Temple Angle",
+                story: "Inside the Sun Temple, a triangle symbol is carved onto a stone pillar. Two of its interior angles measure 50° and 60°.",
+                topic: "Interior Angles of Triangles",
+                question: "What is the measure of the third angle in this triangle?",
+                options: [
+                    { text: "70°", correct: true },
+                    { text: "80°", correct: false },
+                    { text: "90°", correct: false },
+                    { text: "110°", correct: false }
+                ],
+                hint: "The sum of all three angles inside any triangle is always 180°. Add 50° + 60° = 110°, then subtract from 180°.",
+                explanation: "Sum of angles in a triangle = 180°. Known angles: 50° + 60° = 110°. Third angle = 180° - 110° = 70°.",
+                visualType: "triangle_angles",
+                visualData: { angle1: 50, angle2: 60 }
+            },
+            {
+                chapter: "QUEST 2 OF 6",
+                title: "Area of the Temple Courtyard",
+                story: "The expedition maps out a rectangular stone courtyard in the ruins. It measures 6 meters in length and 4 meters in width.",
+                topic: "Area of a Rectangle",
+                question: "What is the total area of this courtyard?",
+                options: [
+                    { text: "24 m²", correct: true },
+                    { text: "20 m²", correct: false },
+                    { text: "10 m²", correct: false },
+                    { text: "12 m²", correct: false }
+                ],
+                hint: "To find the area of a rectangle, multiply its length by its width (Area = Length × Width).",
+                explanation: "Area = Length × Width = 6 meters × 4 meters = 24 square meters (m²).",
+                visualType: "rectangle_area",
+                visualData: { length: 6, width: 4 }
+            },
+            {
+                chapter: "QUEST 3 OF 6",
+                title: "Treasure Grid Map",
+                story: "A map grid marks an ancient treasure box at coordinate position (3, 4). The clue says to move the box 3 units to the right.",
+                topic: "2D Grid Coordinates",
+                question: "What are the new coordinates of the treasure box?",
+                options: [
+                    { text: "(6, 4)", correct: true },
+                    { text: "(3, 7)", correct: false },
+                    { text: "(6, 7)", correct: false },
+                    { text: "(0, 4)", correct: false }
+                ],
+                hint: "Moving right changes the horizontal x-coordinate (the first number). Add 3 to the x-coordinate.",
+                explanation: "Starting position = (3, 4). Moving 3 units right adds 3 to the x-coordinate: 3 + 3 = 6. New coordinates = (6, 4).",
+                visualType: "coordinate_grid",
+                visualData: { start: [3, 4], dx: 3, dy: 0 }
+            },
+            {
+                chapter: "QUEST 4 OF 6",
+                title: "The Ancient Box",
+                story: "You discover a solid wooden treasure chest shaped like a cube in the temple vault.",
+                topic: "3D Shapes (Cube Properties)",
+                question: "How many flat faces does a cube have in total?",
+                options: [
+                    { text: "6 faces", correct: true },
+                    { text: "4 faces", correct: false },
+                    { text: "8 faces", correct: false },
+                    { text: "12 faces", correct: false }
+                ],
+                hint: "Count all flat sides of a cube: top, bottom, front, back, left, and right.",
+                explanation: "A cube is a 3D shape with 6 identical square faces.",
+                visualType: "cube_3d",
+                visualData: { faces: 6 }
+            },
+            {
+                chapter: "QUEST 5 OF 6",
+                title: "Perimeter of the Shield",
+                story: "An ancient stone shield is shaped like an equilateral triangle, where all 3 sides are equal to 5 meters.",
+                topic: "Perimeter of Shapes",
+                question: "What is the perimeter around the stone shield?",
+                options: [
+                    { text: "15 meters", correct: true },
+                    { text: "10 meters", correct: false },
+                    { text: "20 meters", correct: false },
+                    { text: "25 meters", correct: false }
+                ],
+                hint: "Perimeter is the total distance around the outside edges. Add all 3 sides together (5 + 5 + 5).",
+                explanation: "Perimeter = Side 1 + Side 2 + Side 3 = 5m + 5m + 5m = 15 meters.",
+                visualType: "triangle_perimeter",
+                visualData: { side: 5 }
+            },
+            {
+                chapter: "QUEST 6 OF 6",
+                title: "Symmetry of the Gate Glyph",
+                story: "The stone door features a symmetrical diamond emblem (a rhombus).",
+                topic: "Lines of Symmetry",
+                question: "How many lines of symmetry does a standard rhombus (diamond shape) have?",
+                options: [
+                    { text: "2 lines", correct: true },
+                    { text: "1 line", correct: false },
+                    { text: "4 lines", correct: false },
+                    { text: "0 lines", correct: false }
+                ],
+                hint: "A line of symmetry folds a shape into two identical mirror halves. A rhombus can be folded along its vertical and horizontal diagonals.",
+                explanation: "A standard rhombus has 2 lines of symmetry along its opposite corner diagonals.",
+                visualType: "symmetry_rhombus",
+                visualData: { shape: "rhombus" }
+            }
+        ];
+
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) audioCtx = new AudioCtx();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playAudioTone(freq, type, duration, vol = 0.1) {
+            if (!gameState.audioEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = type || 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(vol, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) { console.log(e); }
+        }
+
+        function playSound(effect) {
+            if (effect === 'click') playAudioTone(400, 'sine', 0.08, 0.05);
+            if (effect === 'correct') {
+                playAudioTone(523.25, 'triangle', 0.12, 0.1);
+                setTimeout(() => playAudioTone(659.25, 'triangle', 0.12, 0.1), 100);
+                setTimeout(() => playAudioTone(783.99, 'triangle', 0.25, 0.1), 200);
+            }
+            if (effect === 'wrong') {
+                playAudioTone(220, 'sawtooth', 0.15, 0.08);
+                setTimeout(() => playAudioTone(180, 'sawtooth', 0.25, 0.08), 120);
+            }
+        }
+
+        function toggleAudio() {
+            gameState.audioEnabled = !gameState.audioEnabled;
+            const icon = document.getElementById('soundIcon');
+            if (gameState.audioEnabled) {
+                icon.className = 'fa-solid fa-volume-high';
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-slate-400';
+            }
+        }
+
+        const adventureNotes = [
+            220.00, 261.63, 329.63, 392.00, 440.00, 392.00, 329.63, 261.63,
+            174.61, 220.00, 261.63, 349.23, 392.00, 349.23, 261.63, 220.00
+        ];
+        let noteStep = 0;
+
+        function toggleAdventureMusic() {
+            gameState.adventureMusicActive = !gameState.adventureMusicActive;
+            const icon = document.getElementById('musicIcon');
+            const label = document.getElementById('musicLabel');
+            const btn = document.getElementById('musicBtn');
+
+            if (gameState.adventureMusicActive) {
+                getAudioContext();
+                icon.className = 'fa-solid fa-pause text-emerald-500 animate-pulse';
+                label.innerText = 'Pause Music';
+                btn.className = 'px-3 py-2 text-xs font-semibold rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40 transition flex items-center gap-2';
+
+                noteStep = 0;
+                gameState.musicInterval = setInterval(() => {
+                    if (!gameState.adventureMusicActive) return;
+                    const freq = adventureNotes[noteStep % adventureNotes.length];
+                    playAudioTone(freq, 'sine', 0.28, 0.035);
+                    if (noteStep % 4 === 0) {
+                        playAudioTone(freq / 2, 'triangle', 0.45, 0.05);
+                    }
+                    noteStep++;
+                }, 320);
+            } else {
+                if (gameState.musicInterval) clearInterval(gameState.musicInterval);
+                icon.className = 'fa-solid fa-music';
+                label.innerText = 'Play Adventure Music';
+                btn.className = 'px-3 py-2 text-xs font-semibold rounded-xl bg-teal-500/10 hover:bg-teal-500/20 text-teal-600 dark:text-teal-400 border border-teal-500/30 transition flex items-center gap-2';
+            }
+        }
+
+        function toggleWhiteBackground() {
+            playSound('click');
+            gameState.isWhiteBg = !gameState.isWhiteBg;
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+
+            if (gameState.isWhiteBg) {
+                document.body.classList.add('light-theme');
+                icon.className = 'fa-solid fa-moon text-slate-700';
+                label.innerText = 'Dark BG Mode';
+            } else {
+                document.body.classList.remove('light-theme');
+                icon.className = 'fa-solid fa-sun text-amber-500';
+                label.innerText = 'White BG Mode';
+            }
+        }
+
+        function startStopwatch() {
+            if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+            updateStopwatchDisplay();
+            gameState.timerInterval = setInterval(() => {
+                if (gameState.isStopwatchRunning) {
+                    gameState.secondsElapsed++;
+                    updateStopwatchDisplay();
+                }
+            }, 1000);
+        }
+
+        function toggleStopwatch() {
+            playSound('click');
+            gameState.isStopwatchRunning = !gameState.isStopwatchRunning;
+            const icon = document.getElementById('stopwatchIcon');
+            const label = document.getElementById('stopwatchLabel');
+
+            if (gameState.isStopwatchRunning) {
+                icon.className = 'fa-solid fa-pause text-[10px]';
+                label.innerText = 'Pause';
+            } else {
+                icon.className = 'fa-solid fa-play text-[10px]';
+                label.innerText = 'Start';
+            }
+        }
+
+        function updateStopwatchDisplay() {
+            const mins = Math.floor(gameState.secondsElapsed / 60);
+            const secs = gameState.secondsElapsed % 60;
+            const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            document.getElementById('navTimer').innerText = formatted;
+        }
+
+        function switchView(view) {
+            playSound('click');
+            const questSec = document.getElementById('screenQuest');
+            const wsSec = document.getElementById('screenWorksheet');
+            const vicSec = document.getElementById('screenVictory');
+            const btnQ = document.getElementById('tabQuestBtn');
+            const btnW = document.getElementById('tabWorksheetBtn');
+
+            if (view === 'quest') {
+                questSec.classList.remove('hidden');
+                wsSec.classList.add('hidden');
+                vicSec.classList.add('hidden');
+                btnQ.className = 'px-4 py-2 rounded-lg font-bold text-xs transition flex items-center gap-2 bg-amber-500 text-slate-950 shadow';
+                btnW.className = 'px-4 py-2 rounded-lg font-bold text-xs transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200';
+            } else if (view === 'worksheet') {
+                questSec.classList.add('hidden');
+                wsSec.classList.remove('hidden');
+                vicSec.classList.add('hidden');
+                btnW.className = 'px-4 py-2 rounded-lg font-bold text-xs transition flex items-center gap-2 bg-amber-500 text-slate-950 shadow';
+                btnQ.className = 'px-4 py-2 rounded-lg font-bold text-xs transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200';
+                renderWorksheetQuestions();
+            }
+        }
+
+        function showWorksheetView() {
+            switchView('worksheet');
+        }
+
+        function loadQuestion(index) {
+            if (index >= questions.length) {
+                finishExpedition();
+                return;
+            }
+
+            gameState.currentQuestionIndex = index;
+            gameState.selectedOption = null;
+            const q = questions[index];
+
+            document.getElementById('chapterBadge').innerText = q.chapter;
+            document.getElementById('questTitle').innerText = q.title;
+            document.getElementById('storyText').innerText = q.story;
+            document.getElementById('questionTopic').innerText = q.topic;
+            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('hintText').innerText = q.hint;
+            document.getElementById('hintBox').classList.add('hidden');
+
+            const pct = Math.round(((index + 1) / questions.length) * 100);
+            document.getElementById('progressPercent').innerText = `${pct}%`;
+            document.getElementById('progressBar').style.width = `${pct}%`;
+
+            // Render Answer Options Buttons
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => selectOption(idx);
+                btn.id = `optBtn_${idx}`;
+                btn.className = 'w-full text-left p-3.5 rounded-xl border border-slate-300 dark:border-slate-700/80 bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 transition flex items-center justify-between text-xs md:text-sm text-slate-800 dark:text-slate-200';
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-xs">${String.fromCharCode(65 + idx)}</span>
+                        <span class="font-medium">${opt.text}</span>
+                    </div>
+                    <i class="fa-regular fa-circle text-slate-400 check-icon"></i>
+                `;
+                answersContainer.appendChild(btn);
+            });
+
+            // Render SVG Visual Canvas
+            renderSvgVisualizer(q.visualType, q.visualData, 'geoSvg');
+        }
+
+        function selectOption(idx) {
+            playSound('click');
+            gameState.selectedOption = idx;
+            const q = questions[gameState.currentQuestionIndex];
+
+            q.options.forEach((_, i) => {
+                const btn = document.getElementById(`optBtn_${i}`);
+                if (!btn) return;
+                const icon = btn.querySelector('.check-icon');
+                if (i === idx) {
+                    btn.className = 'w-full text-left p-3.5 rounded-xl border-2 border-amber-500 bg-amber-500/15 transition flex items-center justify-between text-xs md:text-sm font-bold text-amber-700 dark:text-amber-300';
+                    icon.className = 'fa-solid fa-circle-check text-amber-500 check-icon';
+                } else {
+                    btn.className = 'w-full text-left p-3.5 rounded-xl border border-slate-300 dark:border-slate-700/80 bg-slate-100 dark:bg-slate-900/60 transition flex items-center justify-between text-xs md:text-sm text-slate-500 opacity-60';
+                    icon.className = 'fa-regular fa-circle text-slate-400 check-icon';
+                }
+            });
+        }
+
+        function toggleHint() {
+            playSound('click');
+            const hintBox = document.getElementById('hintBox');
+            hintBox.classList.toggle('hidden');
+        }
+
+        function submitAnswer() {
+            if (gameState.selectedOption === null) {
+                alert("Please select one of the answer options first!");
+                return;
+            }
+
+            const q = questions[gameState.currentQuestionIndex];
+            const isCorrect = q.options[gameState.selectedOption].correct;
+
+            const modal = document.getElementById('feedbackModal');
+            const icon = document.getElementById('feedbackIcon');
+            const title = document.getElementById('feedbackTitle');
+            const text = document.getElementById('feedbackText');
+
+            if (isCorrect) {
+                playSound('correct');
+                icon.className = 'w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl bg-emerald-500/20 text-emerald-500 border border-emerald-500/40';
+                icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+                title.innerText = "Correct Answer!";
+                title.className = "cinzel-heading text-xl font-bold text-emerald-600 dark:text-emerald-400";
+                text.innerText = q.explanation;
+            } else {
+                playSound('wrong');
+                icon.className = 'w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl bg-rose-500/20 text-rose-500 border border-rose-500/40';
+                icon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                title.innerText = "Incorrect!";
+                title.className = "cinzel-heading text-xl font-bold text-rose-600 dark:text-rose-400";
+                text.innerText = `Explanation: ${q.explanation}`;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeFeedback() {
+            playSound('click');
+            document.getElementById('feedbackModal').classList.add('hidden');
+            loadQuestion(gameState.currentQuestionIndex + 1);
+        }
+
+        function nextQuestionDirect() {
+            playSound('click');
+            loadQuestion(gameState.currentQuestionIndex + 1);
+        }
+
+        function renderSvgVisualizer(type, data, svgId) {
+            const svg = document.getElementById(svgId);
+            if (!svg) return;
+            svg.innerHTML = '';
+
+            let markup = `<rect width="400" height="400" fill="#030712"/>`;
+
+            if (type === 'triangle_angles') {
+                // Triangle with 50° and 60° labeled, top vertex with ?°
+                markup += `<polygon points="200,80 320,310 80,310" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="4"/>`;
+                
+                // Bottom left angle arc (50°)
+                markup += `<path d="M 110,310 A 30,30 0 0,0 100,285" fill="none" stroke="#10b981" stroke-width="3"/>`;
+                markup += `<text x="115" y="295" fill="#10b981" font-size="14" font-weight="bold">50°</text>`;
+
+                // Bottom right angle arc (60°)
+                markup += `<path d="M 290,310 A 30,30 0 0,1 300,285" fill="none" stroke="#10b981" stroke-width="3"/>`;
+                markup += `<text x="255" y="295" fill="#10b981" font-size="14" font-weight="bold">60°</text>`;
+
+                // Top angle Arc with ?
+                markup += `<path d="M 183,110 A 30,30 0 0,0 217,110" fill="none" stroke="#38bdf8" stroke-width="3"/>`;
+                markup += `<text x="200" y="140" fill="#38bdf8" font-size="20" font-weight="bold" text-anchor="middle">?°</text>`;
+
+                markup += `<text x="200" y="360" fill="#f59e0b" font-size="13" font-weight="bold" text-anchor="middle">Triangle Angle Glyph</text>`;
+            }
+            else if (type === 'rectangle_area') {
+                // Rectangle 6m x 4m
+                markup += `<rect x="70" y="110" width="260" height="170" rx="8" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="4"/>`;
+                
+                markup += `<text x="200" y="90" fill="#38bdf8" font-size="15" font-weight="bold" text-anchor="middle">6 m</text>`;
+                markup += `<text x="350" y="200" fill="#f59e0b" font-size="15" font-weight="bold">4 m</text>`;
+
+                markup += `<text x="200" y="200" fill="#10b981" font-size="16" font-weight="bold" text-anchor="middle">Area = ?</text>`;
+                markup += `<text x="200" y="350" fill="#f59e0b" font-size="13" font-weight="bold" text-anchor="middle">Courtyard Plan</text>`;
+            }
+            else if (type === 'coordinate_grid') {
+                // 10x10 Coordinate Grid
+                const step = 28;
+                const startX = 60;
+                const startY = 320;
+
+                for (let i = 0; i <= 10; i++) {
+                    const x = startX + i * step;
+                    const y = startY - i * step;
+                    markup += `<line x1="${x}" y1="${startY}" x2="${x}" y2="${startY - 10*step}" stroke="#334155" stroke-width="1"/>`;
+                    markup += `<line x1="${startX}" y1="${y}" x2="${startX + 10*step}" y2="${y}" stroke="#334155" stroke-width="1"/>`;
+                    markup += `<text x="${x}" y="${startY + 18}" fill="#64748b" font-size="10" text-anchor="middle">${i}</text>`;
+                    markup += `<text x="${startX - 15}" y="${y + 4}" fill="#64748b" font-size="10" text-anchor="middle">${i}</text>`;
+                }
+
+                // Axes
+                markup += `<line x1="${startX}" y1="${startY}" x2="${startX + 10*step}" y2="${startY}" stroke="#94a3b8" stroke-width="2"/>`;
+                markup += `<line x1="${startX}" y1="${startY}" x2="${startX}" y2="${startY - 10*step}" stroke="#94a3b8" stroke-width="2"/>`;
+
+                // Point A (3, 4)
+                const ax = startX + 3 * step;
+                const ay = startY - 4 * step;
+                markup += `<circle cx="${ax}" cy="${ay}" r="7" fill="#f59e0b"/>`;
+                markup += `<text x="${ax - 12}" y="${ay - 12}" fill="#f59e0b" font-size="12" font-weight="bold">(3,4)</text>`;
+
+                // Movement 3 units right
+                const tx = startX + 6 * step;
+                const ty = startY - 4 * step;
+                markup += `<path d="M ${ax} ${ay} L ${tx} ${ty}" stroke="#10b981" stroke-width="3" stroke-dasharray="5,4"/>`;
+                markup += `<circle cx="${tx}" cy="${ty}" r="7" fill="#38bdf8"/>`;
+                markup += `<text x="${tx + 12}" y="${ty - 10}" fill="#38bdf8" font-size="14" font-weight="bold">?</text>`;
+            }
+            else if (type === 'cube_3d') {
+                // 3D Wireframe Cube
+                // Front face
+                markup += `<rect x="110" y="140" width="140" height="140" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="3"/>`;
+                // Back face
+                markup += `<rect x="170" y="80" width="140" height="140" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4,3"/>`;
+                // Connecting lines
+                markup += `<line x1="110" y1="140" x2="170" y2="80" stroke="#f59e0b" stroke-width="3"/>`;
+                markup += `<line x1="250" y1="140" x2="310" y2="80" stroke="#f59e0b" stroke-width="3"/>`;
+                markup += `<line x1="110" y1="280" x2="170" y2="220" stroke="#f59e0b" stroke-width="3"/>`;
+                markup += `<line x1="250" y1="280" x2="310" y2="220" stroke="#f59e0b" stroke-width="3"/>`;
+
+                markup += `<text x="200" y="350" fill="#f59e0b" font-size="14" font-weight="bold" text-anchor="middle">3D Cube Treasure Chest</text>`;
+            }
+            else if (type === 'triangle_perimeter') {
+                // Equilateral Triangle each side = 5m
+                markup += `<polygon points="200,80 320,300 80,300" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="4"/>`;
+                
+                markup += `<text x="125" y="180" fill="#38bdf8" font-size="14" font-weight="bold">5 m</text>`;
+                markup += `<text x="255" y="180" fill="#38bdf8" font-size="14" font-weight="bold">5 m</text>`;
+                markup += `<text x="200" y="325" fill="#38bdf8" font-size="14" font-weight="bold" text-anchor="middle">5 m</text>`;
+
+                markup += `<text x="200" y="365" fill="#f59e0b" font-size="13" font-weight="bold" text-anchor="middle">Equilateral Stone Shield</text>`;
+            }
+            else if (type === 'symmetry_rhombus') {
+                // Rhombus (Diamond shape) with dashed symmetry lines
+                markup += `<polygon points="200,80 320,200 200,320 80,200" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="4"/>`;
+                
+                // Vertical symmetry line
+                markup += `<line x1="200" y1="50" x2="200" y2="350" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4"/>`;
+                // Horizontal symmetry line
+                markup += `<line x1="50" y1="200" x2="350" y2="200" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4"/>`;
+
+                markup += `<text x="200" y="365" fill="#f59e0b" font-size="13" font-weight="bold" text-anchor="middle">Diamond Gate Emblem</text>`;
+            }
+
+            svg.innerHTML = markup;
+        }
+
+        function renderWorksheetQuestions() {
+            const list = document.getElementById('worksheetQuestionsList');
+            list.innerHTML = '';
+
+            questions.forEach((q, idx) => {
+                const item = document.createElement('div');
+                item.className = 'glass-panel p-6 rounded-2xl space-y-4';
+                const svgContainerId = `ws_svg_${idx}`;
+
+                item.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-300 dark:border-slate-700/60 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-bold px-2.5 py-1 rounded-md border border-amber-500/30">Question ${idx + 1}</span>
+                            <span class="text-xs text-slate-500 dark:text-slate-400">Topic: ${q.topic}</span>
+                        </div>
+                        <span class="text-xs font-bold text-amber-600 dark:text-amber-400">Round 3 Challenge</span>
+                    </div>
+
+                    <p class="text-xs text-slate-600 dark:text-slate-300 italic">${q.story}</p>
+                    <h4 class="text-sm md:text-base font-bold text-slate-900 dark:text-slate-100">${q.question}</h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center pt-2">
+                        <div class="md:col-span-7 space-y-2">
+                            ${q.options.map((opt, oIdx) => `
+                                <div class="p-2.5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/60 text-xs flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded bg-slate-200 dark:bg-slate-800 text-amber-600 dark:text-amber-400 text-center font-bold text-[11px] leading-5">${String.fromCharCode(65 + oIdx)}</span>
+                                        <span class="text-slate-800 dark:text-slate-200 font-medium">${opt.text}</span>
+                                    </div>
+                                    ${gameState.showTeacherKey && opt.correct ? `<span class="text-[10px] bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold px-2 py-0.5 rounded">Correct Answer</span>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="md:col-span-5 flex justify-center">
+                            <div class="w-full max-w-[200px] aspect-square bg-slate-950 rounded-xl border border-slate-800 overflow-hidden grid-bg">
+                                <svg id="${svgContainerId}" class="w-full h-full" viewBox="0 0 400 400"></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${gameState.showTeacherKey ? `
+                        <div class="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs text-emerald-700 dark:text-emerald-300 mt-2">
+                            <strong>Teacher Solution & Explanation:</strong> ${q.explanation}
+                        </div>
+                    ` : `
+                        <div class="pt-2 border-t border-slate-200 dark:border-slate-800">
+                            <span class="text-[10px] uppercase font-bold text-slate-400">Student Scratchpad / Notes Area:</span>
+                            <div class="h-16 w-full border border-dashed border-slate-300 dark:border-slate-700/60 rounded-xl mt-1"></div>
+                        </div>
+                    `}
+                `;
+                list.appendChild(item);
+
+                setTimeout(() => {
+                    renderSvgVisualizer(q.visualType, q.visualData, svgContainerId);
+                }, 50);
+            });
+        }
+
+        function toggleTeacherKey() {
+            playSound('click');
+            gameState.showTeacherKey = !gameState.showTeacherKey;
+            const btn = document.getElementById('btnTeacherKey');
+            if (gameState.showTeacherKey) {
+                btn.className = "px-3 py-2 bg-emerald-600 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-2";
+            } else {
+                btn.className = "px-3 py-2 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-amber-300 font-bold text-xs rounded-xl border border-slate-300 dark:border-slate-700 transition flex items-center gap-2";
+            }
+            renderWorksheetQuestions();
+        }
+
+        function finishExpedition() {
+            document.getElementById('screenQuest').classList.add('hidden');
+            document.getElementById('screenVictory').classList.remove('hidden');
+
+            const mins = Math.floor(gameState.secondsElapsed / 60);
+            const secs = gameState.secondsElapsed % 60;
+            document.getElementById('resTimeLeft').innerText = `${mins}m ${secs}s`;
+
+            playSound('correct');
+        }
+
+        function restartExpedition() {
+            playSound('click');
+            gameState.secondsElapsed = 0;
+            document.getElementById('screenVictory').classList.add('hidden');
+            document.getElementById('screenQuest').classList.remove('hidden');
+            loadQuestion(0);
+        }
+
+        window.onload = function () {
+            startStopwatch();
+            loadQuestion(0);
+        };
+    </script>
+</body>
+</html>
